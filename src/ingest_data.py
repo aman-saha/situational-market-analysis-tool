@@ -1,7 +1,10 @@
 import duckdb
 
 def setup_database(intrada1m_csv, intrada5m_csv, intrada15m_csv, daily_csv):
-    con = duckdb.connect("nifty_data.duckdb")
+    BASE_DIR = Path(__file__).resolve().parent.parent
+    DB_PATH = BASE_DIR / "nifty_data.duckdb"
+
+    con = duckdb.connect(str(DB_PATH), read_only=True)
     
     # 1. Load Intraday - Just cast the existing auto-detected timestamp
     con.execute(f"""
